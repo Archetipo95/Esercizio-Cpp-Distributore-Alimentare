@@ -1,4 +1,10 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+
+#include <articolo.h>
+
+using namespace std;
 
 void clear()
 {
@@ -51,7 +57,7 @@ void loopMenu() {
 
 int main()
 {
-
+/*
     try {
         loopMenu();
     }
@@ -59,7 +65,20 @@ int main()
         std::cerr << "ERRORE\n";
         std::cerr << "Selezionare un numero valido\n";
     }
+*/
+    string n;
+    double p;
+    string d;
 
+
+
+    ifstream dBArticoli("dataBaseArticoli.txt");
+
+    if (dBArticoli.is_open()){
+    while(dBArticoli >> n >> p >> d){
+        cout << n << ", " << p << ", " << d << endl;
+    }
+}else cout << "non riesco ad aprire il file"<<endl;
     /*
     std::cout << " \nPress any key to continue\n";
     std::cin.ignore();
