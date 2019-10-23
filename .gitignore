@@ -6,4 +6,4 @@ build-distributore-Desktop_Qt_5_9_8_MinGW_32bit-Debug
 distributore/*.pro
 
 
-!build-distributore-Desktop_Qt_5_9_8_MinGW_32bit-Debug/*.txt
+!build-distributore-Desktop_Qt_5_9_8_MinGW_32bit-Debug/dataBaseArticoli.txt
