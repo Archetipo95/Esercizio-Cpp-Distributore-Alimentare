@@ -6,8 +6,10 @@ CONFIG -= qt
 SOURCES += \
         articolo.cpp \
         distributore.cpp \
-        main.cpp
+        main.cpp \
+        molla.cpp
 
 HEADERS += \
     articolo.h \
-    distributore.h
+    distributore.h \
+    molla.h
