@@ -1,13 +1,13 @@
 #ifndef DISTRIBUTORE_H
 #define DISTRIBUTORE_H
 
-#include "molla.h"
+#include "Molla.h"
 
 
-class distributore
+class Distributore
 {
 public:
-    distributore();
+    Distributore();
 };
 
 #endif // DISTRIBUTORE_H

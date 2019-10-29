@@ -1,4 +1,4 @@
-#include "distributore.h"
+#include "Distributore.h"
 
 distributore::distributore()
 {

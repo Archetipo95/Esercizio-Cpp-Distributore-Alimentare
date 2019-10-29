@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 
-#include <articolo.h>
+#include <Articolo.h>
 
 using namespace std;
 
@@ -57,7 +57,7 @@ void loopMenu() {
 
 int main()
 {
-/*
+
     try {
         loopMenu();
     }
@@ -65,17 +65,20 @@ int main()
         std::cerr << "ERRORE\n";
         std::cerr << "Selezionare un numero valido\n";
     }
-*/
+
+
+    //dic distributore con 10x5 molle
+
+
     string n;
     double p;
     string d;
-
-
 
     ifstream dBArticoli("dataBaseArticoli.txt");
 
     if (dBArticoli.is_open()){
     while(dBArticoli >> n >> p >> d){
+        articolo a = articolo(n,p,d);
         cout << n << ", " << p << ", " << d << endl;
     }
 }else cout << "non riesco ad aprire il file"<<endl;

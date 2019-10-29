@@ -4,12 +4,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        articolo.cpp \
-        distributore.cpp \
-        main.cpp \
-        molla.cpp
+        Articolo.cpp \
+        Distributore.cpp \
+        Molla.cpp \
+        main.cpp
 
 HEADERS += \
-    articolo.h \
-    distributore.h \
-    molla.h
+    Articolo.h \
+    Distributore.h \
+    Molla.h

@@ -5,13 +5,13 @@
 
 using std::string;
 
-class articolo
-{
+class Articolo {
 public:
+    string IDarticolo;
     string nome;
     double prezzo;
     string dataScadenza;
-    articolo(string nome, double prezzo, string dataScadenza);
+    Articolo(string id, string nome, double prezzo, string dataScadenza);
 };
 
 #endif // ARTICOLO_H

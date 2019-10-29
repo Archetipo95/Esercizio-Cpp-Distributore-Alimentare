@@ -1,4 +1,4 @@
-#include "molla.h"
+#include "Molla.h"
 
 molla::molla()
 {
