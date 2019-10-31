@@ -7,11 +7,13 @@ using std::string;
 
 class Articolo {
 public:
-    string IDarticolo;
+    int idArticolo;
     string nome;
     double prezzo;
     string dataScadenza;
-    Articolo(string id, string nome, double prezzo, string dataScadenza);
+    Articolo(string nome, double prezzo, string dataScadenza);
+    static int conta;
+    ~Articolo();
 };
 
 #endif // ARTICOLO_H

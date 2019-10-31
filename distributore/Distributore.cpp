@@ -1,6 +1,6 @@
 #include "Distributore.h"
 
-distributore::distributore()
+Distributore::Distributore()
 {
 
 }

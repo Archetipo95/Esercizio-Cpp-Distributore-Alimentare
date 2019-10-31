@@ -83,6 +83,8 @@ int main()
     mol.Aggiungi_Articolo(a);
     mol.Aggiungi_Articolo(b);
     mol.Aggiungi_Articolo(c);
+    
+    
 
 
 

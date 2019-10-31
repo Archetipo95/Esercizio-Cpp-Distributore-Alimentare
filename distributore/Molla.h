@@ -34,8 +34,11 @@ public:
     Molla& operator=(const Molla&); //assegnazione profonda
     bool Vuota() const;
     void Aggiungi_Articolo(Articolo t);
-
-
+    Articolo Estrai_Una();
+    //metodi che usano iteratore
+    Iteratore begin() const;
+    Iteratore end() const;
+    Articolo& operator[](Iteratore) const;
 };
 
 #endif // MOLLA_H
