@@ -87,6 +87,8 @@ int main()
 
 
 
+
+
     /*ifstream dBArticoli("dataBaseArticoli.txt");
 
     if (dBArticoli.is_open()){
