@@ -11,7 +11,7 @@ class Nodo {
     Articolo info;
     Nodo* next;
     Nodo();
-    Nodo(const Articolo& x, Nodo* p):info(x),next(p){}
+    Nodo(const Articolo& x, Nodo* p);
     ~Nodo();
 };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
@@ -34,7 +34,8 @@ public:
     Molla& operator=(const Molla&); //assegnazione profonda
     bool Vuota() const;
     void Aggiungi_Articolo(Articolo t);
-    Articolo Estrai_Una();
+    void Togli_Artiolo(Articolo t);
+    Articolo Estrai_Articolo();
     //metodi che usano iteratore
     Iteratore begin() const;
     Iteratore end() const;

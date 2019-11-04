@@ -4,6 +4,7 @@
 
 #include <Articolo.h>
 #include <Molla.h>
+#include <Distributore.h>
 
 using namespace std;
 
@@ -71,7 +72,7 @@ int main()
     //dic distributore con 10x5 molle
 
 
-    Molla mol;
+
 
     Articolo a = Articolo("AAA",1.5,"1/1/1");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
@@ -80,11 +81,14 @@ int main()
     cout << b.idArticolo << ", " << b.nome << ", " << b.prezzo << ", " << b.dataScadenza << endl;
     cout << c.idArticolo << ", " << c.nome << ", " << c.prezzo << ", " << c.dataScadenza << endl;
 
+    Distributore dis;
+    Molla mol;
+
     mol.Aggiungi_Articolo(a);
     mol.Aggiungi_Articolo(b);
     mol.Aggiungi_Articolo(c);
 
-
+    dis.Aggiungi_Molla(mol);
 
 
 

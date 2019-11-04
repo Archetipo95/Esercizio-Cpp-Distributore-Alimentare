@@ -1,5 +1,38 @@
 #include "Molla.h"
 
+Molla::Nodo::Nodo():next(nullptr){}
+
+Molla::Nodo::Nodo(const Articolo& t, Nodo* s): info(t),next(s){}
+
+bool Molla::Vuota() const { return first == nullptr; }
+
+void Molla::Aggiungi_Articolo(Articolo t) {
+    first = new Nodo(t,first); //aggiunge articolo in testa
+}
+
+void Molla::Togli_Artiolo(Articolo t) {
+    Nodo* p= first, *prec=nullptr;
+    while(p && !(p->info==t)){
+        prec=p; p=p->next;
+    }
+    if(p){
+        if(!prec)
+            first=p->next;
+        else
+            prec->next=p->next;
+        delete p;
+    }
+}
+
+Articolo Molla::Estrai_Articolo(){
+//precondizione la molla non è vuota
+    Nodo* p= first;
+    first = first->next;
+    Articolo aux = p->info; //costruttore di copia
+    delete p;
+    return aux;
+}
+
 Molla::Nodo* Molla::copia(Nodo* p){
 if(!p) return nullptr;
 return new Nodo(p->info, copia(p->next));

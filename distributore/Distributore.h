@@ -30,12 +30,14 @@ public:
         Iteratore& operator++();    //operator++ prefisso
         Iteratore operator++(int);  //operator++ postfisso
     };//end class Iteratore
-    Distributore();
+    Distributore(): first(nullptr){}
     ~Distributore();
     Distributore(const Distributore&); //copia profonda
     Distributore& operator=(const Distributore&); //assegnazione profonda
     bool Vuota() const;
-   // void Aggiungi_Articolo(Articolo t); matrice già dic
+    void Aggiungi_Molla(Molla t);
+    void Togli_Molla(Molla t);
+    Molla Estrai_Molla();
 
     //metodi che usano iteratore
     Iteratore begin() const;

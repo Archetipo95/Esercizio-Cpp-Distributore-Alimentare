@@ -10,3 +10,7 @@ Articolo::Articolo(string n, double p, string dS): idArticolo(conta+1), nome(n),
 Articolo::~Articolo(){
     //conta--;
 }
+
+bool Articolo::operator==(const Articolo t) const{
+    return idArticolo == t.idArticolo;
+}
