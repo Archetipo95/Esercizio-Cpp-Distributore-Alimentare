@@ -6,8 +6,6 @@
 #include <Molla.h>
 #include <Distributore.h>
 
-using namespace std;
-
 void clear()
 {
 #if defined _WIN32
@@ -77,18 +75,39 @@ int main()
     Articolo a = Articolo("AAA",1.5,"1/1/1");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
     Articolo c = Articolo("CCC",3.5,"3/3/3");
-    cout << a.idArticolo << ", " << a.nome << ", " << a.prezzo << ", " << a.dataScadenza << endl;
-    cout << b.idArticolo << ", " << b.nome << ", " << b.prezzo << ", " << b.dataScadenza << endl;
-    cout << c.idArticolo << ", " << c.nome << ", " << c.prezzo << ", " << c.dataScadenza << endl;
 
-    Distributore dis;
-    Molla mol;
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
+    std::cout << c << std::endl;
 
-    mol.Aggiungi_Articolo(a);
-    mol.Aggiungi_Articolo(b);
-    mol.Aggiungi_Articolo(c);
+    Distributore dis(3);
+   // Molla mol;
 
-    dis.Aggiungi_Molla(mol);
+    //mol.Aggiungi_Articolo(a);
+   // mol.Aggiungi_Articolo(b);
+    //mol.Aggiungi_Articolo(c);
+
+    dis.insert(a,0);
+    dis.insert(a,0);
+    std::cout << dis << std::endl;
+
+    dis.insert(b,1);
+    dis.insert(b,1);
+
+    //std::cout << dis << std::endl;
+
+
+    dis.insert(c,2);
+    dis.insert(c,2);
+    std::cout << dis << std::endl;
+
+
+
+    //std::cout << dis;
+    //dis.first->info.Aggiungi_Articolo(b);
+    //dis.first->info.Aggiungi_Articolo(c);
+
+
 
 
 

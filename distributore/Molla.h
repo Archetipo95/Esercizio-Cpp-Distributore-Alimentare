@@ -1,22 +1,31 @@
 #ifndef MOLLA_H
 #define MOLLA_H
 
+#include <iostream>
 #include "Articolo.h"
 
 class Molla {
 friend class Iteratore;
+friend class Distributore;
+friend std::ostream& operator<<(std::ostream&, const Molla&);
 private:
 class Nodo {
   public:
     Articolo info;
     Nodo* next;
-    Nodo();
-    Nodo(const Articolo& x, Nodo* p);
+
+    Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){}
     ~Nodo();
+    std::ostream& print(std::ostream& os){
+        os<<info<<"///";
+        if(next)next->print(os);
+        return os;
+    }
 };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
     static Nodo* copia(Nodo*);
     static void distruggi(Nodo*);
+
 public:
     class Iteratore {
         friend class Molla;
@@ -41,5 +50,7 @@ public:
     Iteratore end() const;
     Articolo& operator[](Iteratore) const;
 };
+
+std::ostream& operator<<(std::ostream&, const Molla&);
 
 #endif // MOLLA_H

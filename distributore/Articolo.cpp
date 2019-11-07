@@ -14,3 +14,8 @@ Articolo::~Articolo(){
 bool Articolo::operator==(const Articolo t) const{
     return idArticolo == t.idArticolo;
 }
+
+std::ostream& operator<<(std::ostream& os, const Articolo& t){
+    os << "[" <<t.nome << " " << t.prezzo << " " << t.dataScadenza << "]";
+    return os;
+}

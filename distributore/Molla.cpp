@@ -1,9 +1,5 @@
 #include "Molla.h"
 
-Molla::Nodo::Nodo():next(nullptr){}
-
-Molla::Nodo::Nodo(const Articolo& t, Nodo* s): info(t),next(s){}
-
 bool Molla::Vuota() const { return first == nullptr; }
 
 void Molla::Aggiungi_Articolo(Articolo t) {
@@ -31,6 +27,11 @@ Articolo Molla::Estrai_Articolo(){
     Articolo aux = p->info; //costruttore di copia
     delete p;
     return aux;
+}
+
+std::ostream& operator<<(std::ostream& os, const Molla& t){
+    if(t.first!=nullptr) return t.first->print(os);
+    return os;
 }
 
 Molla::Nodo* Molla::copia(Nodo* p){
