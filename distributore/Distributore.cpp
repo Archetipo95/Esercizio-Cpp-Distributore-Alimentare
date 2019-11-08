@@ -21,6 +21,7 @@ Distributore::Nodo::~Nodo() {
 
 
 std::ostream& operator<<(std::ostream& os, const Distributore& t){
+    os << "***STAMPA DIS***" << std::endl;
     if(t.first!=nullptr) return t.first->print(os);
     return os;
 }

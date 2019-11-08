@@ -22,17 +22,19 @@ private:
                 next= new Nodo(n-1);
         }
         ~Nodo();
-        void insertIn(int n, const Articolo& t){
-            if(n==0){
-                info.Aggiungi_Articolo(t);
+        static void insert_ric(const Articolo& t, int pos, Nodo& nod){
+            if(nod.next==nullptr){
+                nod.info.Aggiungi_Articolo(t);
+            return;
             }
-           else{
-                next=
+            if(pos==0) nod.info.Aggiungi_Articolo(t);
+            else{
+                insert_ric(t, pos-1,*(nod.next));
             }
         }
         std::ostream& print(std::ostream& os){
             os<<"START "<<info << "END";
-            if(next){os<<"..."; next->print(os); }
+            if(next){os<<std::endl; next->print(os); }
             return os;
         }
     };//end class Nodo
@@ -106,14 +108,7 @@ public:
     //add container con iteratore per molle (maybe modulare)
     //matrice di molle
     void insert(Articolo& t, int pos){
-        for(int i=0;i<pos;i++){
-            first->next
-        }
-
-        if(pos==0)
-        first->info.Aggiungi_Articolo(t);
-        else
-            first->next->info.Aggiungi_Articolo(t);
+        first->insert_ric(t,pos,*first);
     }
 };
 

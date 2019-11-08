@@ -17,7 +17,7 @@ class Nodo {
     Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){}
     ~Nodo();
     std::ostream& print(std::ostream& os){
-        os<<info<<"///";
+        os<<info<<"-";
         if(next)next->print(os);
         return os;
     }

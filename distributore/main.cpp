@@ -76,11 +76,11 @@ int main()
     Articolo b = Articolo("BBB",2.5,"2/2/2");
     Articolo c = Articolo("CCC",3.5,"3/3/3");
 
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-    std::cout << c << std::endl;
+    //std::cout << a << std::endl;
+    //std::cout << b << std::endl;
+    //std::cout << c << std::endl;
 
-    Distributore dis(3);
+    Distributore dis(10);
    // Molla mol;
 
     //mol.Aggiungi_Articolo(a);
@@ -89,8 +89,9 @@ int main()
 
     dis.insert(a,0);
     dis.insert(a,0);
-    std::cout << dis << std::endl;
 
+    dis.insert(c,1);
+    dis.insert(a,1);
     dis.insert(b,1);
     dis.insert(b,1);
 

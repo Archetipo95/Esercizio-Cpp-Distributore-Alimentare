@@ -16,6 +16,6 @@ bool Articolo::operator==(const Articolo t) const{
 }
 
 std::ostream& operator<<(std::ostream& os, const Articolo& t){
-    os << "[" <<t.nome << " " << t.prezzo << " " << t.dataScadenza << "]";
+    os << "[" <<t.nome /*<< " " << t.prezzo << " " << t.dataScadenza */<< "]";
     return os;
 }
