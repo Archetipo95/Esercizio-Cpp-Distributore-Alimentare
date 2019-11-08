@@ -15,7 +15,7 @@ private:
       public:
         Molla info;
         Nodo* next;
-        //static int size_N;
+        static int size_N;
         Nodo(const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){}
         Nodo(int n, const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){
             if(n!=0)
@@ -33,12 +33,13 @@ private:
             }
         }
         std::ostream& print(std::ostream& os){
-            os<<"START "<<info << "END";
-            if(next){os<<std::endl; next->print(os); }
+            os << "START " << info << "END";
+            if(next){ os << std::endl; next->print(os); }
             return os;
         }
     };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
+
     static Nodo* copia(Nodo* p){
         if(!p) return nullptr;
         return new Nodo(p->info, copia(p->next));
@@ -77,8 +78,10 @@ public:
         }
     };//end class Iteratore
     Distributore(int n){
-        if(n>0)
+        if(n>0){
             first = new Nodo(n-1);
+            first->size_N = n;
+        }
         else
             return;
     }
@@ -86,6 +89,12 @@ public:
     Distributore(const Distributore&); //copia profonda
     Distributore& operator=(const Distributore&); //assegnazione profonda
     bool Vuota() const { return first == nullptr; }
+    void insert(Articolo& t, int pos){
+        first->insert_ric(t,pos,*first);
+    }
+    int getSize(){
+        return first->size_N;
+    }
 
     //metodi che usano iteratore
     Iteratore begin() const{
@@ -103,12 +112,6 @@ public:
     Molla& operator[](Distributore::Iteratore it) const {
         return (it.punt)->info; //per amicizia
         //NB nessun controllo se i.punt != 0
-    }
-
-    //add container con iteratore per molle (maybe modulare)
-    //matrice di molle
-    void insert(Articolo& t, int pos){
-        first->insert_ric(t,pos,*first);
     }
 };
 

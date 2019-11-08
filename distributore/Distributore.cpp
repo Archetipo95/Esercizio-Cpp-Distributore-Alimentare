@@ -1,5 +1,6 @@
 #include "Distributore.h"
 
+int Distributore::Nodo::size_N = 0;
 
 Distributore& Distributore::operator=(const Distributore& m) {
     if(this != &m){
@@ -21,8 +22,8 @@ Distributore::Nodo::~Nodo() {
 
 
 std::ostream& operator<<(std::ostream& os, const Distributore& t){
-    os << "***STAMPA DIS***" << std::endl;
-    if(t.first!=nullptr) return t.first->print(os);
+    os << "***STAMPA DISTRIBUTORE***" << std::endl;
+    if(t.first!=nullptr) return t.first->print(os) << std::endl << "***FINE STAMPA DISTRIBUTORE***";
     return os;
 }
 

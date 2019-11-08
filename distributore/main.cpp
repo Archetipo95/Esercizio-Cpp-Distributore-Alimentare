@@ -72,7 +72,7 @@ int main()
 
 
 
-    Articolo a = Articolo("AAA",1.5,"1/1/1");
+    Articolo a = Articolo("Matilde",1000,"never");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
     Articolo c = Articolo("CCC",3.5,"3/3/3");
 
@@ -102,17 +102,11 @@ int main()
     dis.insert(c,2);
     std::cout << dis << std::endl;
 
+    //Distributore::Iteratore it = dis.begin();
+    //std::cout << dis[++it];
 
-
-    //std::cout << dis;
-    //dis.first->info.Aggiungi_Articolo(b);
-    //dis.first->info.Aggiungi_Articolo(c);
-
-
-
-
-
-
+    std::cout << dis.getSize();
+    std::cout << std::endl;
     /*ifstream dBArticoli("dataBaseArticoli.txt");
 
     if (dBArticoli.is_open()){
