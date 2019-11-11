@@ -67,11 +67,6 @@ int main()
     }
 */
 
-    //dic distributore con 10x5 molle
-
-
-
-
     Articolo a = Articolo("Matilde",1000,"never");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
     Articolo c = Articolo("CCC",3.5,"3/3/3");
@@ -100,12 +95,44 @@ int main()
 
     dis.insert(c,2);
     dis.insert(c,2);
+
+
     std::cout << dis << std::endl;
 
     //Distributore::Iteratore it = dis.begin();
     //std::cout << dis[++it];
 
-    std::cout << dis.getSize();
+    //std::cout << dis.getSize();
+
+/* Dice se Molla vuota o no
+    for(Distributore::Iteratore it = dis.begin();it!=dis.end();it++){
+        if(dis[it].Vuota())
+            std::cout << "Molla " << &it << " vuota" << std::endl;
+        else
+            std::cout << "Molla " << &it << " non vuota" << std::endl;
+    }
+*/
+
+Distributore::Iteratore it = dis.begin();
+
+
+std::cout << dis[it].Estrai_Articolo();
+
+
+std::cout << dis << std::endl;
+//std::cout << dis << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
     std::cout << std::endl;
     /*ifstream dBArticoli("dataBaseArticoli.txt");
 

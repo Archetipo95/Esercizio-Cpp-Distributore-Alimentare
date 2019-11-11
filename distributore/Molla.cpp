@@ -2,10 +2,12 @@
 
 bool Molla::Vuota() const { return first == nullptr; }
 
+//aggiunge articolo in testa
 void Molla::Aggiungi_Articolo(Articolo t) {
-    first = new Nodo(t,first); //aggiunge articolo in testa
+    first = new Nodo(t,first);
 }
 
+//toglie prima occorrenza di t
 void Molla::Togli_Artiolo(Articolo t) {
     Nodo* p= first, *prec=nullptr;
     while(p && !(p->info==t)){
@@ -16,15 +18,19 @@ void Molla::Togli_Artiolo(Articolo t) {
             first=p->next;
         else
             prec->next=p->next;
+        //isolo il nodo
+        p->next=nullptr;
         delete p;
     }
 }
 
-Articolo Molla::Estrai_Articolo(){
+//toglie e ritorna prima occorrenza di t
 //precondizione la molla non è vuota
+Articolo Molla::Estrai_Articolo(){
     Nodo* p= first;
     first = first->next;
     Articolo aux = p->info; //costruttore di copia
+    p->next=nullptr;
     delete p;
     return aux;
 }
