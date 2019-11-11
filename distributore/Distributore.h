@@ -22,31 +22,31 @@ private:
                 next= new Nodo(n-1);
         }
         ~Nodo();
-        static void insert_ric(const Articolo& t, int pos, Nodo& nod){
+        static void Inserisci_Ric(const Articolo& t, int pos, Nodo& nod){
             if(nod.next==nullptr){
                 nod.info.Aggiungi_Articolo(t);
             return;
             }
             if(pos==0) nod.info.Aggiungi_Articolo(t);
             else{
-                insert_ric(t, pos-1,*(nod.next));
+                Inserisci_Ric(t, pos-1,*(nod.next));
             }
         }
-        std::ostream& print(std::ostream& os){
+        std::ostream& Stampa_Ric(std::ostream& os){
             os << "START " << info << "END";
-            if(next){ os << std::endl; next->print(os); }
+            if(next){ os << std::endl; next->Stampa_Ric(os); }
             return os;
         }
     };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
 
-    static Nodo* copia(Nodo* p){
+    static Nodo* Copia(Nodo* p){
         if(!p) return nullptr;
-        return new Nodo(p->info, copia(p->next));
+        return new Nodo(p->info, Copia(p->next));
         }
-    static void distruggi(Nodo* p) {
+    static void Distruggi(Nodo* p) {
         if(p){
-            distruggi(p->next);
+            Distruggi(p->next);
             delete p;
         }
     }
@@ -89,8 +89,8 @@ public:
     Distributore(const Distributore&); //copia profonda
     Distributore& operator=(const Distributore&); //assegnazione profonda
     bool Vuota() const { return first == nullptr; }
-    void insert(Articolo& t, int pos){
-        first->insert_ric(t,pos,*first);
+    void Inserisci(Articolo& t, int pos){
+        first->Inserisci_Ric(t,pos,*first);
     }
     int getSize(){
         return first->size_N;

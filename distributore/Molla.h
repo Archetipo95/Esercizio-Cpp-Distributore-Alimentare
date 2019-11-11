@@ -16,15 +16,15 @@ class Nodo {
 
     Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){}
     ~Nodo();
-    std::ostream& print(std::ostream& os){
+    std::ostream& Stampa_Ric(std::ostream& os){
         os<<info<<"-";
-        if(next)next->print(os);
+        if(next)next->Stampa_Ric(os);
         return os;
     }
 };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
-    static Nodo* copia(Nodo*);
-    static void distruggi(Nodo*);
+    static Nodo* Copia(Nodo*);
+    static void Distruggi(Nodo*);
 
 public:
     class Iteratore {
