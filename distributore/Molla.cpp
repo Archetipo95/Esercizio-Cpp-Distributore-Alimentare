@@ -1,10 +1,16 @@
 #include "Molla.h"
 
+//int Molla::capacitaMolla=10;
+
 bool Molla::Vuota() const { return first == nullptr; }
 
 //aggiunge articolo in testa
 void Molla::Aggiungi_Articolo(Articolo t) {
+    if(capacitaMolla>0){
     first = new Nodo(t,first);
+    capacitaMolla--;
+    }else
+        std::cout << "OUT OF BOUND MOLLA!!!"<< std::endl;
 }
 
 //toglie prima occorrenza di t
@@ -21,6 +27,7 @@ void Molla::Togli_Artiolo(Articolo t) {
         //isolo il nodo
         p->next=nullptr;
         delete p;
+        capacitaMolla++;
     }
 }
 
@@ -32,42 +39,51 @@ Articolo Molla::Estrai_Articolo(){
     Articolo aux = p->info; //costruttore di copia
     p->next=nullptr;
     delete p;
+    capacitaMolla++;
     return aux;
 }
 
+void Molla::Svuota(){
+    delete first;
+    first=nullptr;
+    capacitaMolla=10;
+}
+
 std::ostream& operator<<(std::ostream& os, const Molla& t){
-    if(t.first!=nullptr) return t.first->print(os);
+    if(t.first!=nullptr) return t.first->Stampa_Ric(os);
     return os;
 }
 
-Molla::Nodo* Molla::copia(Nodo* p){
+Molla::Nodo* Molla::Copia(Nodo* p){
 if(!p) return nullptr;
-return new Nodo(p->info, copia(p->next));
+return new Nodo(p->info, Copia(p->next));
 }
 
-void Molla::distruggi(Nodo* p) {
+void Molla::Distruggi(Nodo* p) {
     if(p){
-        distruggi(p->next);
+        Distruggi(p->next);
         delete p;
     }
 }
 
 Molla& Molla::operator=(const Molla& m) {
     if(this != &m){
-        distruggi(first);
-        first = copia(m.first);
+        Distruggi(first);
+        first = Copia(m.first);
     }
     return *this;
 }
 
 Molla::~Molla() {
-    if(first) delete first;
+    if(first) {delete first;}
 }
 
-Molla::Molla(const Molla& m) : first(copia(m.first)) {}
+Molla::Molla(const Molla& m) : first(Copia(m.first)) {}
 
 Molla::Nodo::~Nodo() {
-    if(next != nullptr) delete next;
+    if(next != nullptr) {
+        delete next;
+    }
 }
 
 bool Molla::Iteratore::operator==(Iteratore i) const {

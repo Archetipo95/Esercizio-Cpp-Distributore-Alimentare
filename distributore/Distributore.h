@@ -33,7 +33,7 @@ private:
             }
         }
         std::ostream& Stampa_Ric(std::ostream& os){
-            os << "START " << info << "END";
+            os << "{-" << info << "}";
             if(next){ os << std::endl; next->Stampa_Ric(os); }
             return os;
         }

@@ -14,7 +14,9 @@ class Nodo {
     Articolo info;
     Nodo* next;
 
-    Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){}
+
+    Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){
+    }
     ~Nodo();
     std::ostream& Stampa_Ric(std::ostream& os){
         os<<info<<"-";
@@ -26,7 +28,9 @@ class Nodo {
     static Nodo* Copia(Nodo*);
     static void Distruggi(Nodo*);
 
+
 public:
+ int capacitaMolla=10;
     class Iteratore {
         friend class Molla;
     private:
@@ -45,10 +49,12 @@ public:
     void Aggiungi_Articolo(Articolo t);
     void Togli_Artiolo(Articolo t);
     Articolo Estrai_Articolo();
+    void Svuota();
     //metodi che usano iteratore
     Iteratore begin() const;
     Iteratore end() const;
     Articolo& operator[](Iteratore) const;
+
 };
 
 std::ostream& operator<<(std::ostream&, const Molla&);

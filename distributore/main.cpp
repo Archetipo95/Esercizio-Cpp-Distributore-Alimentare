@@ -82,19 +82,27 @@ int main()
    // mol.Aggiungi_Articolo(b);
     //mol.Aggiungi_Articolo(c);
 
-    dis.insert(a,0);
-    dis.insert(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
+    dis.Inserisci(a,0);
 
-    dis.insert(c,1);
-    dis.insert(a,1);
-    dis.insert(b,1);
-    dis.insert(b,1);
+    dis.Inserisci(c,1);
+    dis.Inserisci(a,1);
+    dis.Inserisci(b,1);
+    dis.Inserisci(b,1);
 
     //std::cout << dis << std::endl;
 
 
-    dis.insert(c,2);
-    dis.insert(c,2);
+    dis.Inserisci(c,2);
+    dis.Inserisci(c,2);
 
 
     std::cout << dis << std::endl;
@@ -113,15 +121,23 @@ int main()
     }
 */
 
+
+
 Distributore::Iteratore it = dis.begin();
 
+std::cout << dis[it].capacitaMolla << std::endl;
 
-std::cout << dis[it].Estrai_Articolo();
+dis[it].Svuota();
+
+dis.Inserisci(a,0);
+dis.Inserisci(a,0);
+dis.Inserisci(a,0);
+dis.Inserisci(a,0);
+dis.Inserisci(a,0);
 
 
 std::cout << dis << std::endl;
 //std::cout << dis << std::endl;
-
 
 
 
