@@ -19,7 +19,7 @@ void clear()
 
 void benvenuto() {
     std::cout << "  -------------------------\n";
-    std::cout << " |Il Distributore di Martin|\n";
+    std::cout << " |Il Distributore          |\n";
     std::cout << "  -------------------------\n";
 }
 
@@ -28,9 +28,9 @@ void displayMenu() {
     std::cout << " ============================ \n";
     std::cout << " | Comandi disponibili:     |\n";
     std::cout << " |                          |\n";
-    std::cout << " | 1) Fai cosa A            |\n";
-    std::cout << " | 2) Fai cosa B            |\n";
-    std::cout << " | 3) Fai cosa C            |\n";
+    std::cout << " | 1) Stampa distributore   |\n";
+    std::cout << " | 2) NULL OPTION           |\n";
+    std::cout << " | 3) NULL OPTION           |\n";
     std::cout << " ============================ \n";
     std::cout << " | 0) Esci dal programma    |\n";
     std::cout << " ============================ \n";
@@ -40,32 +40,19 @@ void displayMenu() {
 
 }
 
-void loopMenu() {
-    int scelta;
-    do {
-        benvenuto();
-        displayMenu();
-        std::string s;
-        std::cin >> s;
-        scelta = std::stoi(s);
+void pausa(){
+    std::cout << std::endl << "Premi un pulsante per continuare";
+    std::cin.ignore();
+    std::cin.get();
+}
 
-        clear();
-
-        if (scelta < 0 || scelta>4) throw 1;
-    } while (scelta);
+void stampa_Distributore(Distributore& d){
+    std::cout << d << std::endl;
 }
 
 int main()
 {
 
-    /*try {
-        loopMenu();
-    }
-    catch (...) {
-        std::cerr << "ERRORE\n";
-        std::cerr << "Selezionare un numero valido\n";
-    }
-*/
 
     Articolo a = Articolo("Matilde",1000,"never");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
@@ -76,39 +63,30 @@ int main()
     //std::cout << c << std::endl;
 
     Distributore dis(10);
-   // Molla mol;
+    Distributore::Iteratore it = dis.begin();
 
-    //mol.Aggiungi_Articolo(a);
-   // mol.Aggiungi_Articolo(b);
-    //mol.Aggiungi_Articolo(c);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
 
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
-    dis.Inserisci(a,0);
+    //++it == it=it+1;
+    dis[++it].Aggiungi_Articolo(c);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(a);
+    dis[it].Aggiungi_Articolo(b);
+    dis[it].Aggiungi_Articolo(b);
 
-    dis.Inserisci(c,1);
-    dis.Inserisci(a,1);
-    dis.Inserisci(b,1);
-    dis.Inserisci(b,1);
+    //++it == it=it+1;
+    dis[++it].Aggiungi_Articolo(c);
+    dis[it].Aggiungi_Articolo(c);
 
-    //std::cout << dis << std::endl;
-
-
-    dis.Inserisci(c,2);
-    dis.Inserisci(c,2);
-
-
-    std::cout << dis << std::endl;
-
-    //Distributore::Iteratore it = dis.begin();
-    //std::cout << dis[++it];
 
     //std::cout << dis.getSize();
 
@@ -121,8 +99,34 @@ int main()
     }
 */
 
+    try {
+        int scelta;
+        do {
+            clear();
+            benvenuto();
+            displayMenu();
+            std::string s;
+            std::cin >> s;
+            scelta = std::stoi(s);
 
+            switch (scelta){
+            case 1:
+                clear();
+                stampa_Distributore(dis);
+                pausa();
+                break;
+            }
 
+            if (scelta < 0 || scelta>4) throw 1;
+        } while (scelta);
+    }
+    catch (...) {
+        std::cerr << "\nERRORE\n";
+        std::cerr << "Selezionare un numero valido\n";
+
+    }
+
+/*
 Distributore::Iteratore it = dis.begin();
 
 std::cout << dis[it].capacitaMolla << std::endl;
@@ -139,7 +143,7 @@ dis.Inserisci(a,0);
 std::cout << dis << std::endl;
 //std::cout << dis << std::endl;
 
-
+*/
 
 
 
