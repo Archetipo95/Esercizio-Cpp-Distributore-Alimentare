@@ -1,34 +1,34 @@
-#ifndef DISTRIBUTORE_H
-#define DISTRIBUTORE_H
-
-#include "Molla.h"
+#ifndef AZIENDA_H
+#define AZIENDA_H
 
 
-class Distributore
+#include <iostream>
+#include "Distributore.h"
+
+
+class Azienda
 {
     friend class Iteratore;
-    //friend class Molla;
-    friend std::ostream& operator<<(std::ostream&, const Distributore&);
+    friend std::ostream& operator<<(std::ostream&, const Azienda&);
 private:
     class Nodo {
       public:
-        Molla info;
+        Distributore info;
         Nodo* next;
         static int size_N;
-        Nodo(const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){}
-        Nodo(int n, const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){
+        Nodo(const Distributore& x, Nodo* p=nullptr):info(x),next(p){}
+        /*Nodo(int n, const Distributore& x=Distributore(), Nodo* p=nullptr):info(x),next(p){
             if(n!=0)
                 next= new Nodo(n-1);
-        }
+        }*/
         ~Nodo();
         std::ostream& Stampa_Ric(std::ostream& os){
-            os << "{-" << info << "}";
+            os << info;
             if(next){ os << std::endl; next->Stampa_Ric(os); }
             return os;
         }
     };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
-    string idDistributore;
 
     static Nodo* Copia(Nodo* p){
         if(!p) return nullptr;
@@ -44,9 +44,9 @@ private:
 public:
 
     class Iteratore {
-        friend class Distributore;
+        friend class Azienda;
     private:
-        Distributore::Nodo* punt;      //nodo puntato dall'iteratore
+        Azienda::Nodo* punt;      //nodo puntato dall'iteratore
     public:
         bool operator==(Iteratore i) const {
             return punt==i.punt;
@@ -67,27 +67,39 @@ public:
             return aux;
         }
     };//end class Iteratore
-    //non ci può essere un distributore senza molle
-    Distributore(int n, string s){
-        if(n>0){
-            first = new Nodo(n-1);
-            first->size_N = n;
-            idDistributore = s;
-        }
-        else
-            return;
-    }
-    ~Distributore();
-    Distributore(const Distributore&); //copia profonda
-    Distributore& operator=(const Distributore&); //assegnazione profonda
+    Azienda():first(nullptr){}
+    ~Azienda();
+    Azienda(const Azienda&); //copia profonda
+    Azienda& operator=(const Azienda&); //assegnazione profonda
     bool Vuota() const { return first == nullptr; }
 
     int getSize(){
         return first->size_N;
     }
 
-    string getId(){
-        return idDistributore;
+    void Aggiungi_Distributore(int n, string s){
+        Distributore dis(n,s);
+        if(first==nullptr) {first= new Nodo(dis);}
+        else{ first= new Nodo(dis,first);}
+    }
+
+    void Rimuovi_Distributore(int n){
+        if(first && !first->next){
+            delete first;
+            first=nullptr;
+        }else if(first){
+            Nodo* aux=first;
+            Nodo* prec=nullptr;
+            for(int i=0;i<n || !aux;i++){
+                prec=aux;
+                aux=aux->next;
+            }
+            //deve eliminare aux
+            std::cout << aux->info;
+            prec->next=aux->next;
+            aux->next=nullptr;
+            delete aux;
+        }
     }
 
     //metodi che usano iteratore
@@ -103,12 +115,13 @@ public:
         return aux;
     }
 
-    Molla& operator[](Distributore::Iteratore it) const {
+    Distributore& operator[](Azienda::Iteratore it) const {
         return (it.punt)->info; //per amicizia
         //NB nessun controllo se i.punt != 0
     }
 };
 
-std::ostream& operator<<(std::ostream&, const Distributore&);
+std::ostream& operator<<(std::ostream&, const Azienda&);
 
-#endif // DISTRIBUTORE_H
+
+#endif // AZIENDA_H

@@ -2,12 +2,10 @@
 #include <string>
 #include <fstream>
 
-#include <Articolo.h>
-#include <Molla.h>
-#include <Distributore.h>
 
-void clear()
-{
+#include <Azienda.h>
+
+void clear() {
 #if defined _WIN32
     system("cls");
 #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
@@ -17,22 +15,40 @@ void clear()
 #endif
 }
 
-void benvenuto() {
+void Menu_Azienda() {
     std::cout << "  -------------------------\n";
-    std::cout << " |Il Distributore          |\n";
+    std::cout << " |       Azienda sr        |\n";
     std::cout << "  -------------------------\n";
+    std::cout << "\n";
+    std::cout << " ============================ \n";
+    std::cout << " | Comandi disponibili:     |\n";
+    std::cout << " |                          |\n";
+    std::cout << " | 1) Stampa tutti i distri |\n";
+    std::cout << " | 2) Aggiungi distributore |\n";
+    std::cout << " | 3) Rimuovi distributore  |\n";
+    std::cout << " | 4) Gestisci distributore |\n";
+    std::cout << " ============================ \n";
+    std::cout << " | 0) Esci dal programma    |\n";
+    std::cout << " ============================ \n";
+    std::cout << "\n";
+    std::cout << "Scegli: ";
 }
 
-void displayMenu() {
+void Menu_Distributore() {
+    std::cout << "  -------------------------\n";
+    std::cout << " | Distributore #000000    |\n";
+    std::cout << " | Localita: Via XXX       |\n";
+    std::cout << "  -------------------------\n";
     std::cout << "\n";
     std::cout << " ============================ \n";
     std::cout << " | Comandi disponibili:     |\n";
     std::cout << " |                          |\n";
     std::cout << " | 1) Stampa distributore   |\n";
-    std::cout << " | 2) NULL OPTION           |\n";
-    std::cout << " | 3) NULL OPTION           |\n";
+    std::cout << " | 2) Aggiungi articolo     |\n";
+    std::cout << " | 3) Togli articolo        |\n";
+    std::cout << " | 4) Svuota distributore   |\n";
     std::cout << " ============================ \n";
-    std::cout << " | 0) Esci dal programma    |\n";
+    std::cout << " | 0) Torna al menu precedente |\n";
     std::cout << " ============================ \n";
     std::cout << "\n";
     std::cout << "Scegli: ";
@@ -50,61 +66,79 @@ void stampa_Distributore(Distributore& d){
     std::cout << d << std::endl;
 }
 
+void stampa_Azienda(Azienda& a){
+    std::cout << a << std::endl;
+}
+
+void AggiungiDis(Azienda& srl){
+    std::cout << "Aggiunta nuovo distributore"<< std::endl;
+    std::cout << std::endl;
+    std::cout << "Quante molle ha?"<< std::endl;
+    std::string s;
+    std::cin >> s;
+    int scelta = std::stoi(s);
+    std::cout << "Dove si trova?"<< std::endl;
+    std::cin >> s;
+    srl.Aggiungi_Distributore(scelta,s);
+}
+
+void RimuoviDis(Azienda& srl){
+    stampa_Azienda(srl);
+    std::cout << std::endl;
+    std::cout << "Quale distributore vuoi eliminare?"<< std::endl;
+    std::string s;
+    std::cin >> s;
+    int scelta = std::stoi(s);
+    srl.Rimuovi_Distributore(scelta);//parte da 0
+}
+
 int main()
 {
-
 
     Articolo a = Articolo("Matilde",1000,"never");
     Articolo b = Articolo("BBB",2.5,"2/2/2");
     Articolo c = Articolo("CCC",3.5,"3/3/3");
 
-    //std::cout << a << std::endl;
-    //std::cout << b << std::endl;
-    //std::cout << c << std::endl;
+    Azienda srl;
+    srl.Aggiungi_Distributore(1,"5");
+    srl.Aggiungi_Distributore(2,"5");
+    srl.Aggiungi_Distributore(3,"5");
+    srl.Aggiungi_Distributore(4,"5");
+    srl.Aggiungi_Distributore(5,"5");
+ /*   Azienda::Iteratore itAzz=srl.begin();
 
-    Distributore dis(10);
-    Distributore::Iteratore it = dis.begin();
+    Distributore::Iteratore itDis = srl[itAzz].begin();
 
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+
+    srl[itAzz][++itDis].Aggiungi_Articolo(c);
+    srl[itAzz][itDis].Aggiungi_Articolo(c);
+    srl[itAzz][itDis].Aggiungi_Articolo(b);
+    srl[itAzz][itDis].Aggiungi_Articolo(b);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
+    srl[itAzz][itDis].Aggiungi_Articolo(a);
 
     //++it == it=it+1;
-    dis[++it].Aggiungi_Articolo(c);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(a);
-    dis[it].Aggiungi_Articolo(b);
-    dis[it].Aggiungi_Articolo(b);
+    srl[itAzz][++itDis].Aggiungi_Articolo(c);
+    srl[itAzz][itDis].Aggiungi_Articolo(c);
+    srl[itAzz][itDis].Aggiungi_Articolo(c);
 
-    //++it == it=it+1;
-    dis[++it].Aggiungi_Articolo(c);
-    dis[it].Aggiungi_Articolo(c);
-
-
-    //std::cout << dis.getSize();
-
-/* Dice se Molla vuota o no
-    for(Distributore::Iteratore it = dis.begin();it!=dis.end();it++){
-        if(dis[it].Vuota())
-            std::cout << "Molla " << &it << " vuota" << std::endl;
-        else
-            std::cout << "Molla " << &it << " non vuota" << std::endl;
-    }
+    srl[itAzz][++itDis].Aggiungi_Articolo(c);
 */
-
-    try {
+    //try {
         int scelta;
         do {
             clear();
-            benvenuto();
-            displayMenu();
+            Menu_Azienda();
             std::string s;
             std::cin >> s;
             scelta = std::stoi(s);
@@ -112,19 +146,32 @@ int main()
             switch (scelta){
             case 1:
                 clear();
-                stampa_Distributore(dis);
+                stampa_Azienda(srl);
+                pausa();
+                break;
+
+            case 2:
+                clear();
+                AggiungiDis(srl);
+                break;
+            case 3:
+                clear();
+                RimuoviDis(srl);
+                break;
+            case 4:
+                clear();
+                Menu_Distributore();
                 pausa();
                 break;
             }
-
-            if (scelta < 0 || scelta>4) throw 1;
+            //if (scelta < 0 || scelta>4) throw 1;
         } while (scelta);
-    }
+    /*}
     catch (...) {
         std::cerr << "\nERRORE\n";
         std::cerr << "Selezionare un numero valido\n";
 
-    }
+    }*/
 
 /*
 Distributore::Iteratore it = dis.begin();
