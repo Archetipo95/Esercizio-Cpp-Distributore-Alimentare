@@ -27,8 +27,7 @@ Azienda::Nodo::~Nodo() {
 
 
 std::ostream& operator<<(std::ostream& os, const Azienda& t){
-    os << "***STAMPA Azienda***" << std::endl;
-    if(t.first!=nullptr) return t.first->Stampa_Ric(os) << std::endl << "***FINE STAMPA Azienda***";
+    if(t.first!=nullptr) return t.first->Stampa_Ric(os, 0);
     return os;
 }
 

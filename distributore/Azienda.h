@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Distributore.h"
+#include <string>
 
 
 class Azienda
@@ -17,14 +18,11 @@ private:
         Nodo* next;
         static int size_N;
         Nodo(const Distributore& x, Nodo* p=nullptr):info(x),next(p){}
-        /*Nodo(int n, const Distributore& x=Distributore(), Nodo* p=nullptr):info(x),next(p){
-            if(n!=0)
-                next= new Nodo(n-1);
-        }*/
         ~Nodo();
-        std::ostream& Stampa_Ric(std::ostream& os){
-            os << info;
-            if(next){ os << std::endl; next->Stampa_Ric(os); }
+        std::ostream& Stampa_Ric(std::ostream& os, int n){
+            os << "DISTRIBUTORE #" << n << std::endl;
+            os <<info;
+            if(next){ os << std::endl; next->Stampa_Ric(os, ++n); }
             return os;
         }
     };//end class Nodo
@@ -79,8 +77,8 @@ public:
 
     void Aggiungi_Distributore(int n, string s){
         Distributore dis(n,s);
-        if(first==nullptr) {first= new Nodo(dis);}
-        else{ first= new Nodo(dis,first);}
+        if(first==nullptr) {first = new Nodo(dis);}
+        else first = new Nodo(dis,first);
     }
 
     void Rimuovi_Distributore(int n){

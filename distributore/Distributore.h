@@ -21,14 +21,14 @@ private:
                 next= new Nodo(n-1);
         }
         ~Nodo();
-        std::ostream& Stampa_Ric(std::ostream& os){
-            os << "{-" << info << "}";
-            if(next){ os << std::endl; next->Stampa_Ric(os); }
+        std::ostream& Stampa_Ric(std::ostream& os, int n){
+            os <<"{" << n <<"}" <<"{-" << info << "}";
+            if(next){ os << std::endl; next->Stampa_Ric(os,++n); }
             return os;
         }
     };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
-    string idDistributore;
+    static string idDistributore;
 
     static Nodo* Copia(Nodo* p){
         if(!p) return nullptr;
@@ -74,8 +74,10 @@ public:
             first->size_N = n;
             idDistributore = s;
         }
-        else
-            return;
+        else{
+            std::cout << "attenzione zero molle";
+            return ;
+        }
     }
     ~Distributore();
     Distributore(const Distributore&); //copia profonda

@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         Azienda.cpp \
         Articolo.cpp \
+        Catalogo.cpp \
         Distributore.cpp \
         Molla.cpp \
         main.cpp
@@ -13,5 +14,6 @@ SOURCES += \
 HEADERS += \
     Azienda.h \
     Articolo.h \
+    Catalogo.h \
     Distributore.h \
     Molla.h
