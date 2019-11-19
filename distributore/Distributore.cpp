@@ -1,12 +1,11 @@
 #include "Distributore.h"
 
-int Distributore::Nodo::size_N = 0;
-string Distributore::idDistributore = "";
-
 Distributore& Distributore::operator=(const Distributore& m) {
     if(this != &m){
         Distruggi(first);
         first = Copia(m.first);
+        localita = m.localita;
+        numeroMolle = m.numeroMolle;
     }
     return *this;
 }
@@ -15,7 +14,10 @@ Distributore::~Distributore() {
     if(first) delete first;
 }
 
-Distributore::Distributore(const Distributore& m) : first(Copia(m.first)) {}
+Distributore::Distributore(const Distributore& m) : first(Copia(m.first)) {
+    localita = m.localita;
+    numeroMolle = m.numeroMolle;
+}
 
 Distributore::Nodo::~Nodo() {
     if(next != nullptr) delete next;

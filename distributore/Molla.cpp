@@ -1,16 +1,24 @@
 #include "Molla.h"
 
-//int Molla::capacitaMolla=10;
-
 bool Molla::Vuota() const { return first == nullptr; }
 
 //aggiunge articolo in testa
 void Molla::Aggiungi_Articolo(Articolo t) {
     if(capacitaMolla>0){
-    first = new Nodo(t,first);
-    capacitaMolla--;
+        if(!first) first = new Nodo(t,first);
+        else{
+           Molla::Nodo* aux = first;
+            while(first->next){
+                first=first->next;
+            }
+            first->next = new Nodo(t,nullptr);
+            first=aux;
+        }
+        --capacitaMolla;
+        ++Molla::size;
     }else
-        std::cout << "OUT OF BOUND MOLLA!!!"<< std::endl;
+        //std::cout << "OUT OF BOUND MOLLA!!!"<< std::endl;
+        return;
 }
 
 //toglie prima occorrenza di t
@@ -119,10 +127,16 @@ Molla::Iteratore Molla::end() const{
     return aux;
 }
 
-Articolo& Molla::operator[](Molla::Iteratore it) const {
-    return (it.punt)->info; //per amicizia
+Articolo& Molla::operator[](int n) const {
+    Nodo* aux = first;
+
+    while(aux && n){
+        aux=aux->next;
+        n--;
+    }
+
+    return aux->info; //per amicizia
     //NB nessun controllo se i.punt != 0
 }
-
 
 

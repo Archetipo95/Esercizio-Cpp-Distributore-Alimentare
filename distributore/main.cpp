@@ -3,8 +3,11 @@
 #include <fstream>
 
 
-#include <Azienda.h>
+//#include <Azienda.h>
 #include <Catalogo.h>
+#include <Distributore.h>
+
+#include <DList.h>
 
 void clear() {
 #if defined _WIN32
@@ -40,7 +43,7 @@ void Menu_Azienda() {
 void Menu_Distributore(Distributore& dis) {
     std::cout << "      -------------------------\n";
     std::cout << "     | Distributore: NoName    |\n";
-    std::cout << "     | Localita: "<< dis.getId() << "           |\n";
+    std::cout << "     | Localita: "<< dis.getLocalita() << "           |\n";
     std::cout << "      -------------------------\n";
     std::cout << "     |       Sei un tecnico    |\n";
     std::cout << "      -------------------------\n";
@@ -71,18 +74,18 @@ void stampa_Distributore(Distributore& d){
     std::cout << "Molle distributore: \n";
     std::cout << d << "\n";
 }
-
+/*
 void Svuota_Distributore (Distributore& dis){
     for(Distributore::Iteratore it = dis.begin(); it!=dis.end(); ++it){
         dis[it].Svuota();
     }
-}
+}*/
 
-void stampa_Azienda(Azienda& a){
+/*void stampa_Azienda(Azienda& a){
     std::cout << a << "\n";
-}
+}*/
 
-void AggiungiDis(Azienda& srl){
+/*void AggiungiDis(Azienda& srl){
     std::cout << "Aggiunta nuovo distributore"<< "\n";
     std::cout << "\n";
     std::cout << "Quante molle ha?"<< "\n";
@@ -94,9 +97,9 @@ void AggiungiDis(Azienda& srl){
     std::cin.ignore();
     getline(std::cin,input);
     srl.Aggiungi_Distributore(scelta,input);
-}
+}*/
 
-void RimuoviDis(Azienda& srl){
+/*void RimuoviDis(Azienda& srl){
     stampa_Azienda(srl);
     std::cout << "\n";
     std::cout << "Quale distributore vuoi eliminare?"<< "\n";
@@ -104,13 +107,13 @@ void RimuoviDis(Azienda& srl){
     std::cin >> s;
     int scelta = std::stoi(s);
     srl.Rimuovi_Distributore(scelta);//parte da 0
-}
+}*/
 
 void stampa_Articoli(Catalogo& cat){
     std::cout<<cat;
 }
 
-void aggiungiArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
+/*void aggiungiArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
     stampa_Distributore(azienda[itAz]);
     std::cout << "\nIn quale molla vuoi inserire? ";
     std::string molSel;
@@ -128,9 +131,9 @@ void aggiungiArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& 
     Distributore::Iteratore itdis=azienda[itAz].begin();
     while(moll){ ++itdis; moll--;}
     azienda[itAz][itdis].Aggiungi_Articolo(catalogo[itcat]);
-}
+}*/
 
-void rimuoviArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
+/*void rimuoviArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
     stampa_Distributore(azienda[itAz]);
     std::cout << "\nDa quale molla vuoi rimuovere? ";
     std::string molSel;
@@ -148,16 +151,9 @@ void rimuoviArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& i
     Distributore::Iteratore itdis=azienda[itAz].begin();
     while(moll){ ++itdis; moll--;}
     azienda[itAz][itdis].Togli_Artiolo(catalogo[itcat]);
-}
+}*/
 
-//MAIN
-
-int main()
-{
-    Azienda azienda;
-    Catalogo catalogo;
-
-    //riempi catalogo da file Load
+void loadCatalogo(Catalogo& catalogo){
     std::ifstream dBArticoli("dataBaseArticoli.txt");
     if (dBArticoli.is_open()){
         string nome, data;
@@ -166,25 +162,78 @@ int main()
             catalogo.Aggiungi_Articolo(Articolo(nome,prezzo,data));
 
         }
-    }else std::cout << "non riesco ad aprire il file\n";
+    }else std::cout << "non riesco ad aprire il file catalogo\n";
+    dBArticoli.close();
+}
 
-    azienda.Aggiungi_Distributore(1,"111");
-    azienda.Aggiungi_Distributore(2,"222");
-    azienda.Aggiungi_Distributore(3,"333");
-    azienda.Aggiungi_Distributore(4,"444");
-    azienda.Aggiungi_Distributore(5,"555");
+void loadDistributori(dList<Distributore>& azienda){
+    std::ifstream dBDistributori("dataBaseDistributori.txt");
+    if (dBDistributori.is_open()){
+        int molle;
+        string localita,riga;
+        while(std::getline(dBDistributori,riga)){
+            molle = stoi(riga.substr(0,riga.find(",")));
+            localita = riga.substr(riga.find(",")+1,riga.find("$")-riga.find(",")-1);
+            Distributore dis(molle, localita);
+            azienda.insertBack(dis);
+        }
+    }else std::cout << "non riesco ad aprire il file distributori\n";
+    dBDistributori.close();
+}
 
-    Azienda::Iteratore itAzz=azienda.begin();
-    Distributore::Iteratore itDiss=azienda[itAzz].begin();
-    Catalogo::Iteratore itCat = catalogo.begin();
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[itCat]);
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[++itCat]);
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[++itCat]);
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[++itCat]);
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[++itCat]);
-    azienda[itAzz][itDiss].Aggiungi_Articolo(catalogo[itCat]);
+void saveMolle(dList<Distributore>& azienda){
+    std::ofstream dBMolle("dataBaseMolle.txt");
 
-    //try {
+    for(int a=0; a<azienda.getSize(); a++){
+        for(int b=0;b<azienda[a].getMolle();b++){
+            for(int c=0; c<azienda[a][b].getSize();c++)
+           dBMolle << a << " " << b << " " <<azienda[a][b][c].getId() << std::endl;
+        }
+
+    }
+    dBMolle.close();
+}
+
+void saveDistributori(dList<Distributore>& azienda){
+    std::ofstream dBDistributori("dataBaseDistributori.txt");
+
+    for(dList<Distributore>::constiterator itz=azienda.begin(); itz != azienda.end(); ++itz){
+        dBDistributori << (*itz).Distributore::getMolle() << "," << (*itz).Distributore::getLocalita() << "$\n";
+    }
+    dBDistributori.close();
+
+    saveMolle(azienda);
+}
+
+void loadMolle(dList<Distributore>& azienda, Catalogo& catalogo){
+    std::ifstream dMolle("dataBaseMolle.txt");
+    if (dMolle.is_open()){
+        int a,b,c;
+        while(dMolle >> a >> b >> c){
+            if(a<azienda.getSize() && c<catalogo.getNumeroArticolo() && b<azienda[a].getMolle())
+            azienda[a][b].Aggiungi_Articolo(catalogo[c]);
+        }
+    }else std::cout << "non riesco ad aprire il file catalogo\n";
+    dMolle.close();
+}
+
+//MAIN
+int main(){
+    dList<Distributore> azienda;
+    Catalogo catalogo;
+
+    //riempi catalogo da file Load
+    loadCatalogo(catalogo);
+
+    //riempi azienda da file
+    loadDistributori(azienda);
+
+    //riempi distributori
+    loadMolle(azienda, catalogo);
+
+    std::cout << azienda;
+
+    /*
         int scelta, scelta2;
         do {
             clear();
@@ -196,16 +245,16 @@ int main()
             switch (scelta){
             case 1:{
                 clear();
-                stampa_Azienda(azienda);
+                //stampa_Azienda(azienda);
                 pausa();
                 break;}
             case 2:{
                 clear();
-                AggiungiDis(azienda);
+                //AggiungiDis(azienda);
                 break;}
             case 3:{
                 clear();
-                RimuoviDis(azienda);
+                //RimuoviDis(azienda);
                 break;}
             case 4:{
                 clear();
@@ -256,24 +305,17 @@ int main()
             }
             //if (scelta < 0 || scelta>4) throw 1;
         } while (scelta);
-   /* }
-    catch (...) {
-        std::cerr << "\nERRORE\n";
-        std::cerr << "Selezionare un numero valido\n";
-
-    }*/
+    */
 
 
 
 
-
-    std::cout << "\n";
-
+    //salva stato azienda
+    saveDistributori(azienda);
 
     /*
     std::cout << " \nPress any key to continue\n";
     std::cin.ignore();
     std::cin.get();
     */
-
 }

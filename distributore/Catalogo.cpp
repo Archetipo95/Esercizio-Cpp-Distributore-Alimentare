@@ -1,10 +1,22 @@
 #include "Catalogo.h"
 
+int Catalogo::numeroArticoli=0;
+
 bool Catalogo::Vuota() const { return first == nullptr; }
 
-//aggiunge articolo in testa
+//aggiunge articolo in coda
 void Catalogo::Aggiungi_Articolo(Articolo t) {
-    first = new Nodo(t,first);
+    if(!first) first = new Nodo(t,first);
+    else{
+       Catalogo::Nodo* aux = first;
+        while(first->next){
+            first=first->next;
+        }
+        first->next = new Nodo(t,nullptr);
+        first=aux;
+    }
+
+    numeroArticoli++;
 }
 
 //toglie prima occorrenza di t
@@ -111,8 +123,15 @@ Catalogo::Iteratore Catalogo::end() const{
     return aux;
 }
 
-Articolo& Catalogo::operator[](Catalogo::Iteratore it) const {
-    return (it.punt)->info; //per amicizia
+Articolo& Catalogo::operator[](int n) const {
+    Nodo* aux = first;
+
+    while(aux && n){
+        aux=aux->next;
+        n--;
+    }
+
+    return aux->info; //per amicizia
     //NB nessun controllo se i.punt != 0
 }
 

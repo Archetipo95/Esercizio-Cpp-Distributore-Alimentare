@@ -14,7 +14,6 @@ private:
       public:
         Molla info;
         Nodo* next;
-        static int size_N;
         Nodo(const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){}
         Nodo(int n, const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){
             if(n!=0)
@@ -28,7 +27,8 @@ private:
         }
     };//end class Nodo
     Nodo* first;    //puntatore al primo nodo della lista
-    static string idDistributore;
+    int numeroMolle;
+    string localita;
 
     static Nodo* Copia(Nodo* p){
         if(!p) return nullptr;
@@ -71,8 +71,8 @@ public:
     Distributore(int n, string s){
         if(n>0){
             first = new Nodo(n-1);
-            first->size_N = n;
-            idDistributore = s;
+            numeroMolle = n;
+            localita = s;
         }
         else{
             std::cout << "attenzione zero molle";
@@ -84,12 +84,12 @@ public:
     Distributore& operator=(const Distributore&); //assegnazione profonda
     bool Vuota() const { return first == nullptr; }
 
-    int getSize(){
-        return first->size_N;
+    int getMolle() const{
+        return numeroMolle;
     }
 
-    string getId(){
-        return idDistributore;
+    string getLocalita() const{
+        return localita;
     }
 
     //metodi che usano iteratore
@@ -105,8 +105,14 @@ public:
         return aux;
     }
 
-    Molla& operator[](Distributore::Iteratore it) const {
-        return (it.punt)->info; //per amicizia
+    Molla& operator[](int n) const {
+        Nodo* aux = first;
+
+        while(aux && n){
+            aux=aux->next;
+            n--;
+        }
+        return aux->info; //per amicizia
         //NB nessun controllo se i.punt != 0
     }
 };

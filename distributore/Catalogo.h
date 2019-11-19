@@ -25,7 +25,7 @@ class Nodo {
     Nodo* first;    //puntatore al primo nodo della lista
     static Nodo* Copia(Nodo*);
     static void Distruggi(Nodo*);
-
+    static int numeroArticoli;
 public:
 
     class Iteratore {
@@ -50,7 +50,10 @@ public:
     //metodi che usano iteratore
     Iteratore begin() const;
     Iteratore end() const;
-    Articolo& operator[](Iteratore) const;
+    Articolo& operator[](int) const;
+    int getNumeroArticolo(){
+        return numeroArticoli;
+    }
 
 };
 

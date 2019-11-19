@@ -15,5 +15,6 @@ HEADERS += \
     Azienda.h \
     Articolo.h \
     Catalogo.h \
+    DList.h \
     Distributore.h \
     Molla.h

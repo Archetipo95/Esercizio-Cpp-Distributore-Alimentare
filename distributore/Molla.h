@@ -27,10 +27,11 @@ class Nodo {
     Nodo* first;    //puntatore al primo nodo della lista
     static Nodo* Copia(Nodo*);
     static void Distruggi(Nodo*);
-
+    int capacitaMolla=10;
+    int size=0;
 
 public:
- int capacitaMolla=10;
+
     class Iteratore {
         friend class Molla;
     private:
@@ -53,8 +54,13 @@ public:
     //metodi che usano iteratore
     Iteratore begin() const;
     Iteratore end() const;
-    Articolo& operator[](Iteratore) const;
-
+    Articolo& operator[](int) const;
+    int getCapacita (){
+        return capacitaMolla;
+    }
+    int getSize(){
+        return size;
+    }
 };
 
 std::ostream& operator<<(std::ostream&, const Molla&);

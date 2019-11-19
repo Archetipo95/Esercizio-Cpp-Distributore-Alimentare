@@ -15,9 +15,9 @@ private:
     class Nodo {
       public:
         Distributore info;
-        Nodo* next;
-        static int size_N;
-        Nodo(const Distributore& x, Nodo* p=nullptr):info(x),next(p){}
+        Nodo *prev, *next;
+        static int sizeNodo;
+        Nodo(const Distributore& x, Nodo* p=nullptr, Nodo* n=nullptr):info(x),prev(p),next(n){}
         ~Nodo();
         std::ostream& Stampa_Ric(std::ostream& os, int n){
             os << "DISTRIBUTORE #" << n << std::endl;
@@ -26,12 +26,22 @@ private:
             return os;
         }
     };//end class Nodo
-    Nodo* first;    //puntatore al primo nodo della lista
+    Nodo *last, *first;    //punt ultimo e primo nodo della lista
 
-    static Nodo* Copia(Nodo* p){
-        if(!p) return nullptr;
-        return new Nodo(p->info, Copia(p->next));
+    static Nodo* Copia(Nodo* p, Nodo*& l){
+        if(p==nullptr) return l=nullptr;
+        Nodo* prec=new Nodo(p->info,nullptr,nullptr);
+        Nodo* succ=prec;
+        Nodo* start=prec;
+        while(p->next!=nullptr) {
+          succ = new Nodo(p->next->info,prec,nullptr);
+          prec->next=succ;
+          p=p->next;
+          prec=prec->next;
         }
+        l=succ;
+        return start;
+    }
     static void Distruggi(Nodo* p) {
         if(p){
             Distruggi(p->next);
@@ -69,10 +79,12 @@ public:
     ~Azienda();
     Azienda(const Azienda&); //copia profonda
     Azienda& operator=(const Azienda&); //assegnazione profonda
+    void insertFront(const Distributore&);
+    void insertBack(const Distributore&);
     bool Vuota() const { return first == nullptr; }
 
     int getSize(){
-        return first->size_N;
+        return first->sizeNodo;
     }
 
     void Aggiungi_Distributore(int n, string s){

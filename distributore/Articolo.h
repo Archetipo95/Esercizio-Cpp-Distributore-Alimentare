@@ -19,6 +19,9 @@ public:
     ~Articolo();
 
     bool operator==(const Articolo t) const;
+    int getId(){
+        return idArticolo;
+    }
 };
 
 std::ostream& operator<<(std::ostream&, const Articolo&);
