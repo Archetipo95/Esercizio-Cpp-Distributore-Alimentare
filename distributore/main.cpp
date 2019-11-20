@@ -2,12 +2,9 @@
 #include <string>
 #include <fstream>
 
-
-//#include <Azienda.h>
-#include <Catalogo.h>
+#include <DList.h>
 #include <Distributore.h>
 
-#include <DList.h>
 
 void clear() {
 #if defined _WIN32
@@ -42,7 +39,8 @@ void Menu_Azienda() {
 
 void Menu_Distributore(Distributore& dis) {
     std::cout << "      -------------------------\n";
-    std::cout << "     | Distributore: NoName    |\n";
+    std::cout << "     | Distributore: iD    |\n";
+    std::cout << "     | molle: "<<dis.getMolle()<<"    |\n";
     std::cout << "     | Localita: "<< dis.getLocalita() << "           |\n";
     std::cout << "      -------------------------\n";
     std::cout << "     |       Sei un tecnico    |\n";
@@ -70,96 +68,87 @@ void pausa(){
     std::cin.get();
 }
 
-void stampa_Distributore(Distributore& d){
+void stampaDistributore(Distributore& d){
     std::cout << "Molle distributore: \n";
     std::cout << d << "\n";
 }
-/*
-void Svuota_Distributore (Distributore& dis){
-    for(Distributore::Iteratore it = dis.begin(); it!=dis.end(); ++it){
-        dis[it].Svuota();
+
+void svuotaDistributore (Distributore& dis){
+    for(int n = 0; n<dis.getMolle(); n++){
+        dis[n].Svuota();
     }
-}*/
+}
 
-/*void stampa_Azienda(Azienda& a){
-    std::cout << a << "\n";
-}*/
+void stampaAzienda(dList<Distributore>& azienda){
+    std::cout << azienda << "\n";
+}
 
-/*void AggiungiDis(Azienda& srl){
+void aggiungiDis(dList<Distributore>& azienda){
     std::cout << "Aggiunta nuovo distributore"<< "\n";
     std::cout << "\n";
     std::cout << "Quante molle ha?"<< "\n";
     std::string s;
     std::cin >> s;
-    int scelta = std::stoi(s);
+    int molle = std::stoi(s);
     std::cout << "Dove si trova?" << "\n";
-    string input;
+    string localita;
     std::cin.ignore();
-    getline(std::cin,input);
-    srl.Aggiungi_Distributore(scelta,input);
-}*/
+    getline(std::cin,localita);
+    Distributore dis(molle,localita);
+    azienda.insertBack(dis);
+}
 
-/*void RimuoviDis(Azienda& srl){
-    stampa_Azienda(srl);
+void rimuoviDis(dList<Distributore>& azienda){
+    stampaAzienda(azienda);
     std::cout << "\n";
     std::cout << "Quale distributore vuoi eliminare?"<< "\n";
     std::string s;
     std::cin >> s;
     int scelta = std::stoi(s);
-    srl.Rimuovi_Distributore(scelta);//parte da 0
-}*/
-
-void stampa_Articoli(Catalogo& cat){
-    std::cout<<cat;
+    azienda.removeNth(scelta);//parte da 0
 }
 
-/*void aggiungiArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
-    stampa_Distributore(azienda[itAz]);
+void stampa_Articoli(dList<Articolo>& catalogo){
+    std::cout<<catalogo;
+}
+
+void aggiungiArticolo(dList<Articolo>& catalogo, dList<Distributore>& azienda, int itaz){
+    stampaDistributore(azienda[itaz]);
     std::cout << "\nIn quale molla vuoi inserire? ";
     std::string molSel;
     std::cin >> molSel;
-    int moll = stoi(molSel);
+    int itm = stoi(molSel);
     stampa_Articoli(catalogo);
     std::cout << "\nQuale articolo vuoi inserire? ";
     std::string artSel;
     std::cin >> artSel;
-    int art = stoi(artSel);
+    int itar = stoi(artSel);
 
-    Catalogo::Iteratore itcat=catalogo.begin();
-    while(art){ ++itcat; art--;}
+    azienda[itaz][itm].Aggiungi_Articolo(catalogo[itar]);
+}
 
-    Distributore::Iteratore itdis=azienda[itAz].begin();
-    while(moll){ ++itdis; moll--;}
-    azienda[itAz][itdis].Aggiungi_Articolo(catalogo[itcat]);
-}*/
-
-/*void rimuoviArticolo(Catalogo& catalogo, Azienda& azienda, Azienda::Iteratore& itAz){
-    stampa_Distributore(azienda[itAz]);
+void rimuoviArticolo(dList<Articolo>& catalogo, dList<Distributore>& azienda, int itaz){
+    stampaDistributore(azienda[itaz]);
     std::cout << "\nDa quale molla vuoi rimuovere? ";
     std::string molSel;
     std::cin >> molSel;
-    int moll = stoi(molSel);
+    int itm = stoi(molSel);
     stampa_Articoli(catalogo);
     std::cout << "\nQuale articolo vuoi rimuovere? ";
     std::string artSel;
     std::cin >> artSel;
-    int art = stoi(artSel);
+    int itar = stoi(artSel);
 
-    Catalogo::Iteratore itcat=catalogo.begin();
-    while(art){ ++itcat; art--;}
+    azienda[itaz][itm].Togli_Artiolo(catalogo[itar]);
+}
 
-    Distributore::Iteratore itdis=azienda[itAz].begin();
-    while(moll){ ++itdis; moll--;}
-    azienda[itAz][itdis].Togli_Artiolo(catalogo[itcat]);
-}*/
-
-void loadCatalogo(Catalogo& catalogo){
+void loadCatalogo(dList<Articolo>& catalogo){
     std::ifstream dBArticoli("dataBaseArticoli.txt");
     if (dBArticoli.is_open()){
         string nome, data;
         double prezzo;
         while(dBArticoli >> nome >> prezzo >> data){
-            catalogo.Aggiungi_Articolo(Articolo(nome,prezzo,data));
+            catalogo.insertBack(Articolo(nome,prezzo,data));
 
         }
     }else std::cout << "non riesco ad aprire il file catalogo\n";
@@ -205,12 +194,12 @@ void saveDistributori(dList<Distributore>& azienda){
     saveMolle(azienda);
 }
 
-void loadMolle(dList<Distributore>& azienda, Catalogo& catalogo){
+void loadMolle(dList<Distributore>& azienda, dList<Articolo>& catalogo){
     std::ifstream dMolle("dataBaseMolle.txt");
     if (dMolle.is_open()){
         int a,b,c;
         while(dMolle >> a >> b >> c){
-            if(a<azienda.getSize() && c<catalogo.getNumeroArticolo() && b<azienda[a].getMolle())
+            if(a<azienda.getSize() && c<catalogo.getSize() && b<azienda[a].getMolle())
             azienda[a][b].Aggiungi_Articolo(catalogo[c]);
         }
     }else std::cout << "non riesco ad aprire il file catalogo\n";
@@ -220,7 +209,7 @@ void loadMolle(dList<Distributore>& azienda, Catalogo& catalogo){
 //MAIN
 int main(){
     dList<Distributore> azienda;
-    Catalogo catalogo;
+    dList<Articolo> catalogo;
 
     //riempi catalogo da file Load
     loadCatalogo(catalogo);
@@ -231,9 +220,6 @@ int main(){
     //riempi distributori
     loadMolle(azienda, catalogo);
 
-    std::cout << azienda;
-
-    /*
         int scelta, scelta2;
         do {
             clear();
@@ -245,59 +231,54 @@ int main(){
             switch (scelta){
             case 1:{
                 clear();
-                //stampa_Azienda(azienda);
+                stampaAzienda(azienda);
                 pausa();
                 break;}
             case 2:{
                 clear();
-                //AggiungiDis(azienda);
+                aggiungiDis(azienda);
                 break;}
             case 3:{
                 clear();
-                //RimuoviDis(azienda);
+                rimuoviDis(azienda);
                 break;}
             case 4:{
                 clear();
-                stampa_Azienda(azienda);
+                stampaAzienda(azienda);
                 std::cout << "\nQuale distributore vuoi selezionare? ";
                 std::string s;
                 std::cin >> s;
-                int dis = std::stoi(s);
-                Azienda::Iteratore itAz=azienda.begin();
-                std::cout << azienda[itAz].getId();
-                while(dis){
-                    ++itAz;
-                    dis--;
-                }
+                int itd = std::stoi(s);
+
                 do{
                     clear();
-                    Menu_Distributore(azienda[itAz]);
+                    Menu_Distributore(azienda[itd]);
                     std::cin >> s;
                     scelta2 = std::stoi(s);
 
                     switch (scelta2){
                     case 1:{
                         clear();
-                        stampa_Distributore(azienda[itAz]);
+                        stampaDistributore(azienda[itd]);
                         pausa();
                         break;}
                     case 2:{
                         clear();
                         //aggiungi articolo
-                        aggiungiArticolo(catalogo, azienda, itAz);
+                        aggiungiArticolo(catalogo, azienda, itd);
                         //BONUS: chiedi quanti articoli vuoi aggiongere
                         pausa();
                         break;}
                     case 3:{
                         clear();
-                        rimuoviArticolo(catalogo, azienda, itAz);
+                        rimuoviArticolo(catalogo, azienda, itd);
                         //rimuove la prima occorrenza
                         //BONUS: quantità da togliere
                         break;}
                     case 4:{
                         clear();
                         //svuota distributore
-                        Svuota_Distributore(azienda[itAz]);
+                        svuotaDistributore(azienda[itd]);
                         break;}
                     }
                 }while(scelta2);
@@ -305,7 +286,7 @@ int main(){
             }
             //if (scelta < 0 || scelta>4) throw 1;
         } while (scelta);
-    */
+
 
 
 

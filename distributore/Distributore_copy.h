@@ -3,9 +3,11 @@
 
 #include "Molla.h"
 
+
 class Distributore
 {
     friend class Iteratore;
+    //friend class Molla;
     friend std::ostream& operator<<(std::ostream&, const Distributore&);
 private:
     class Nodo {
@@ -27,7 +29,6 @@ private:
     Nodo* first;    //puntatore al primo nodo della lista
     int numeroMolle;
     string localita;
-
 
     static Nodo* Copia(Nodo* p){
         if(!p) return nullptr;

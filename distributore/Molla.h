@@ -6,7 +6,7 @@
 
 class Molla {
 friend class Iteratore;
-friend class Distributore;
+//friend class Distributore;
 friend std::ostream& operator<<(std::ostream&, const Molla&);
 private:
 class Nodo {
