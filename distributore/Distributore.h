@@ -1,87 +1,24 @@
 #ifndef DISTRIBUTORE_H
 #define DISTRIBUTORE_H
 
+#include "DList.h"
 #include "Molla.h"
 
 class Distributore
 {
-    friend class Iteratore;
     friend std::ostream& operator<<(std::ostream&, const Distributore&);
-private:
-    class Nodo {
-      public:
-        Molla info;
-        Nodo* next;
-        Nodo(const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){}
-        Nodo(int n, const Molla& x=Molla(), Nodo* p=nullptr):info(x),next(p){
-            if(n!=0)
-                next= new Nodo(n-1);
-        }
-        ~Nodo();
-        std::ostream& Stampa_Ric(std::ostream& os, int n){
-            os <<"{" << n <<"}" <<"{-" << info << "}";
-            if(next){ os << std::endl; next->Stampa_Ric(os,++n); }
-            return os;
-        }
-    };//end class Nodo
-    Nodo* first;    //puntatore al primo nodo della lista
+    dList<Molla> molle;    //lista di molle max n
     int numeroMolle;
     string localita;
 
-
-    static Nodo* Copia(Nodo* p){
-        if(!p) return nullptr;
-        return new Nodo(p->info, Copia(p->next));
-        }
-    static void Distruggi(Nodo* p) {
-        if(p){
-            Distruggi(p->next);
-            delete p;
-        }
-    }
-
 public:
 
-    class Iteratore {
-        friend class Distributore;
-    private:
-        Distributore::Nodo* punt;      //nodo puntato dall'iteratore
-    public:
-        bool operator==(Iteratore i) const {
-            return punt==i.punt;
-        }
-        bool operator!=(Iteratore i) const {
-            return punt!=i.punt;
-        }
-        //incremento prefisso
-        Iteratore& operator++() {
-            if(punt) punt=punt->next; //side-effect
-            return *this;
-        }//NB se punt==0 non fa nulla
-
-        //incremento postfisso
-        Iteratore operator++(int) {
-            Iteratore aux = *this;
-            if(punt) punt=punt->next;
-            return aux;
-        }
-    };//end class Iteratore
     //non ci può essere un distributore senza molle
-    Distributore(int n, string s){
-        if(n>0){
-            first = new Nodo(n-1);
-            numeroMolle = n;
-            localita = s;
-        }
-        else{
-            std::cout << "attenzione zero molle";
-            return ;
-        }
-    }
-    ~Distributore();
-    Distributore(const Distributore&); //copia profonda
-    Distributore& operator=(const Distributore&); //assegnazione profonda
-    bool Vuota() const { return first == nullptr; }
+    Distributore(unsigned int n, string s):molle(dList<Molla>(n,Molla())), numeroMolle(molle.getSize()), localita(s){}
+    ~Distributore(){}
+    //Distributore(const Distributore&); //copia profonda
+    //Distributore& operator=(const Distributore&); //assegnazione profonda
+    //bool Vuota() const { return first == nullptr; }
 
     int getMolle() const{
         return numeroMolle;
@@ -91,31 +28,30 @@ public:
         return localita;
     }
 
-    //metodi che usano iteratore
-    Iteratore begin() const{
-        Iteratore aux;
-        aux.punt = first; //per amicizia
-        return aux;
+    void addOnMolla(int n, Articolo a){
+        molle[n].addArticolo(a);
     }
 
-    Iteratore end() const{
-        Iteratore aux;
-        aux.punt = nullptr; //per amicizia
-        return aux;
+    void removeFromMolla(int n, int articolo){
+        molle[n].removeArticolo(articolo);
     }
+
+    void emptyMolle(){
+        for(int n=0; n<static_cast<int>(molle.getSize()); n++){
+            molle[n].Svuota();
+        }
+    }
+
 
     Molla& operator[](int n) const {
-        Nodo* aux = first;
-
-        while(aux && n){
-            aux=aux->next;
-            n--;
-        }
-        return aux->info; //per amicizia
-        //NB nessun controllo se i.punt != 0
+        return molle[n];
     }
+
+
 };
 
-std::ostream& operator<<(std::ostream&, const Distributore&);
-
+std::ostream& operator<<(std::ostream& os, const Distributore& t){
+    /*if(!t.molle.isEmpty())*/ return os << "# DISTRIBUTORE: "<< t.getLocalita() <<std::endl<< t.molle << "\n";
+   // return os;
+}
 #endif // DISTRIBUTORE_H

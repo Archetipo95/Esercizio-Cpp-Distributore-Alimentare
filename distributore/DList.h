@@ -22,14 +22,15 @@ private:
         ~nodo() {delete next;}
 
         std::ostream& recPrint(std::ostream& os, int n){
-            os << "DISTRIBUTORE #" << n << std::endl;
+            os << n;
             os <<info;
-            if(next){ os << std::endl; next->recPrint(os, ++n); }
+            if(next){ next->recPrint(os, ++n);}
             return os;
         }
+
     };
     nodo *last, *first; // lista vuota iff first==last==nullptr
-    int size=0;
+    unsigned int size=0;
     static nodo* copy(nodo* p, nodo*& l){
         if(p==nullptr) return l=nullptr;
         nodo* prec=new nodo(p->info,nullptr,nullptr);
@@ -55,18 +56,22 @@ private:
     }
 
 public:
-    dList():last(nullptr),first(nullptr){}
+    dList():last(nullptr),first(nullptr),size(0){}
+    dList(unsigned int k, const T& t): last(nullptr), first(nullptr) {
+        for(unsigned int i=0; i<k; ++i)
+            insertBack(t);
 
-    ~dList() {delete first;}
-    dList(const dList& d): first(copy(d.first,last)) {
-        // first=copy(d.first,last);
+        size=k;
     }
 
+    ~dList() {delete first;size=0;}
+    dList(const dList& d): first(copy(d.first,last)), size(d.size) {}
     dList& operator=(const dList& d) {
         if(this != &d) {
             delete first;
             first=copy(d.first,last);
         }
+        size=d.size;
         return *this;
     }
 
@@ -104,6 +109,24 @@ public:
         size--;
     }
 
+    //toglie prima occorrenza di t
+   /* void removeFirstOccurrence(T t) {
+        nodo* p= first, *pr=nullptr;
+        while(p && !(p->info==t)){
+            pr=p; p=p->next;
+        }
+        if(p){
+            if(!pr)
+                first=p->next;
+            else
+                pr->next=p->next;
+            //isolo il nodo
+            p->next=nullptr;
+            delete p;
+            size++;
+        }
+    }*/
+
     void removeNth(int n){//se non ce nulla bug
         if(n<size){
             if(first->next==nullptr && first){//se ce un nodo
@@ -132,13 +155,17 @@ public:
         }
     }
 
-    dList(unsigned int k, const T& t): last(nullptr), first(nullptr) {
-        for(unsigned int i=0; i<k; ++i)
-            insertFront(t);
-    }
-
     bool operator<(const dList& d) const {
         return isLess(first,d.first);
+    }
+
+    bool isEmpty() const{
+        return first==nullptr;
+    }
+
+    void Empty(){
+        delete first;
+        first=last=nullptr;
     }
 
     /* T operator[](int n){//senza troppi controlli
@@ -150,42 +177,42 @@ public:
       return aux.info;
   }*/
 
-    class Iteratore {
+    class iterator {
         friend class dList<T>;
     private:
         nodo* punt;      //nodo puntato dall'iteratore
     public:
-        bool operator==(Iteratore i) const {
+        bool operator==(iterator i) const {
             return punt==i.punt;
         }
 
-        bool operator!=(Iteratore i) const {
+        bool operator!=(iterator i) const {
             return punt!=i.punt;
         }
 
         //incremento prefisso
-        Iteratore& operator++() {
+        iterator& operator++() {
             if(punt) punt=punt->next; //side-effect
             return *this;
         }//NB se punt==0 non fa nulla
 
         //incremento postfisso
-        Iteratore operator++(int) {
-            Iteratore aux = *this;
+        iterator operator++(int) {
+            iterator aux = *this;
             if(punt) punt=punt->next;
             return aux;
         }
-    };//end class Iteratore
+    };//end class iterator
 
     //metodi che usano iteratore
-    Iteratore beginIT() const{
-        Iteratore aux;
+    iterator beginIT() const{
+        iterator aux;
         aux.punt = first; //per amicizia
         return aux;
     }
 
-    Iteratore endIT() const{
-        Iteratore aux;
+    iterator endIT() const{
+        iterator aux;
         aux.punt = nullptr; //per amicizia
         return aux;
     }
@@ -201,15 +228,15 @@ public:
         //NB nessun controllo se i.punt != 0
     }
 
-    class constiterator {
+    class constIterator {
         friend class dList<T>;
     private:
         nodo* ptr;
         bool pastTheEnd; // true iff constiterator e' "past-the-end"
         // conversione nodo* => constiterator
-        constiterator(nodo* p, bool pte=false): ptr(p), pastTheEnd(pte) {}
+        constIterator(nodo* p, bool pte=false): ptr(p), pastTheEnd(pte) {}
     public:
-        constiterator(): ptr(nullptr), pastTheEnd(false) {}
+        constIterator(): ptr(nullptr), pastTheEnd(false) {}
 
         const T& operator*() const {
             return ptr->info;
@@ -219,7 +246,7 @@ public:
             return &(ptr->info);
         }
 
-        constiterator& operator++() {
+        constIterator& operator++() {
             if(ptr!= nullptr) {
                 if(!pastTheEnd) {
                     if(ptr->next==nullptr) {++ptr; pastTheEnd=true;}
@@ -229,7 +256,7 @@ public:
             return *this;
         }
 
-        constiterator& operator--() {
+        constIterator& operator--() {
             if(ptr!=nullptr) {
                 if(pastTheEnd) {--ptr; pastTheEnd=false;}
                 else ptr=ptr->prev;
@@ -237,25 +264,25 @@ public:
             return *this;
         }
 
-        bool operator==(const constiterator& x) const {
+        bool operator==(const constIterator& x) const {
             return ptr==x.ptr;
         }
 
-        bool operator!=(const constiterator& x) const {
+        bool operator!=(const constIterator& x) const {
             return ptr!=x.ptr;
         }
     };
 
-    constiterator begin() const {
+    constIterator begin() const {
         return first;
     }
 
-    constiterator end() const {
+    constIterator end() const {
         if(last==nullptr) return nullptr;
-        return constiterator(last+1,true);
+        return constIterator(last+1,true);
     }
 
-    int getSize(){
+    unsigned int getSize() const{
         return size;
     }
 
@@ -264,7 +291,7 @@ public:
 
 template <class T>
 std::ostream& operator<<(std::ostream& os, const dList<T>& t){
-    if(t.first!=nullptr) return t.first->recPrint(os, 0);
+    if(t.first!=nullptr) return t.first->recPrint(os,0);
     return os;
 }
 

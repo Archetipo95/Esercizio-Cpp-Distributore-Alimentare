@@ -5,13 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
         Articolo.cpp \
-        Distributore.cpp \
-        Molla.cpp \
-        main.cpp
+        main.cpp \
+        saveLoad.cpp
 
 HEADERS += \
     Articolo.h \
     DList.h \
     Distributore.h \
-    Distributore_copy.h \
     Molla.h

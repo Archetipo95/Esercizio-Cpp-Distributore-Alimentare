@@ -1,68 +1,55 @@
 #ifndef MOLLA_H
 #define MOLLA_H
 
-#include <iostream>
 #include "Articolo.h"
+#include "DList.h"
 
 class Molla {
-friend class Iteratore;
-//friend class Distributore;
 friend std::ostream& operator<<(std::ostream&, const Molla&);
-private:
-class Nodo {
-  public:
-    Articolo info;
-    Nodo* next;
 
-
-    Nodo(const Articolo& x=Articolo(), Nodo* p=nullptr):info(x),next(p){
-    }
-    ~Nodo();
-    std::ostream& Stampa_Ric(std::ostream& os){
-        os<<info<<"-";
-        if(next)next->Stampa_Ric(os);
-        return os;
-    }
-};//end class Nodo
-    Nodo* first;    //puntatore al primo nodo della lista
-    static Nodo* Copia(Nodo*);
-    static void Distruggi(Nodo*);
-    int capacitaMolla=10;
-    int size=0;
-
+    dList<Articolo> molla; //lista articoli max 10
+    const unsigned int capacitaMolla= 10;
 public:
 
-    class Iteratore {
-        friend class Molla;
-    private:
-        Molla::Nodo* punt;      //nodo puntato dall'iteratore
-    public:
-        bool operator==(Iteratore) const;
-        bool operator!=(Iteratore) const;
-        Iteratore& operator++();    //operator++ prefisso
-        Iteratore operator++(int);  //operator++ postfisso
-    };//end class Iteratore
-    Molla(): first(nullptr){}
-    ~Molla(); //distruttore profondo
-    Molla(const Molla&); //copia profonda
-    Molla& operator=(const Molla&); //assegnazione profonda
-    bool Vuota() const;
-    void Aggiungi_Articolo(Articolo t);
-    void Togli_Artiolo(Articolo t);
-    Articolo Estrai_Articolo();
-    void Svuota();
-    //metodi che usano iteratore
-    Iteratore begin() const;
-    Iteratore end() const;
-    Articolo& operator[](int) const;
-    int getCapacita (){
-        return capacitaMolla;
+    Molla(){}
+    Molla(Articolo& a){
+        molla.insertBack(a);
     }
+    ~Molla(){} //distruttore profondo
+    //Molla(const Molla&);//copia profonda
+    //Molla& operator=(const Molla&); //assegnazione profonda
+    //bool Vuota() const;
+    bool isFull() const{
+        return molla.getSize()==capacitaMolla;
+    }
+    void addArticolo(Articolo a){
+        if(!isFull()){
+            molla.insertBack(a);
+        }else{
+            std::cout << "Capacita molla raggiunta articolo: " << a << " non aggiunto\n";
+        }
+    }
+
+    void removeArticolo(int n){
+        molla.removeNth(n);
+    }
+    //void Togli_Artiolo(Articolo t);
+    //Articolo Estrai_Articolo();
+    void Svuota(){
+        molla.Empty();
+    }
+
     int getSize(){
-        return size;
+        return molla.getSize();
+    }
+
+    Articolo& operator[](int n) const {
+        return molla[n];
     }
 };
 
-std::ostream& operator<<(std::ostream&, const Molla&);
+std::ostream& operator<<(std::ostream& os, const Molla& t){
+    return os << "{" << t.molla<< "}\n";
+}
 
 #endif // MOLLA_H

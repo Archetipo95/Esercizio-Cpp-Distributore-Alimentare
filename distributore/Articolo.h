@@ -13,7 +13,7 @@ public:
     string nome;
     double prezzo;
     string dataScadenza;
-    Articolo();
+    //Articolo(){}
     Articolo(string nome, double prezzo, string dataScadenza);
     static int conta;
     ~Articolo();
