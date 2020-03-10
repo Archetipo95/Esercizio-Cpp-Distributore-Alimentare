@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>risorse/distributore.png</file>
+        <file>risorse/tecnico.png</file>
+        <file>risorse/utente.png</file>
+        <file>risorse/add.png</file>
+        <file>risorse/save.png</file>
+        <file>risorse/settings.png</file>
+        <file>risorse/info.png</file>
+        <file>risorse/remove.png</file>
+        <file>risorse/edit.png</file>
+        <file>risorse/search.png</file>
+    </qresource>
+</RCC>

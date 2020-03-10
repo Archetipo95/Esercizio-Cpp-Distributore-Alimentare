@@ -51,7 +51,6 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& os, const Distributore& t){
-    /*if(!t.molle.isEmpty())*/ return os << "# DISTRIBUTORE: "<< t.getLocalita() <<std::endl<< t.molle << "\n";
-   // return os;
+    return os << "# DISTRIBUTORE: "<< t.getLocalita() <<std::endl<< t.molle << "\n";
 }
 #endif // DISTRIBUTORE_H

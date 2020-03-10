@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>finestraTecnico</class>
+ <widget class="QMainWindow" name="finestraTecnico">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>GetFat | Tecnico</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(62, 62, 62)</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>comandi</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionsalva_stato"/>
+   <addaction name="separator"/>
+   <addaction name="actionlook"/>
+   <addaction name="actionadd"/>
+   <addaction name="actionremove"/>
+   <addaction name="actionedit"/>
+  </widget>
+  <action name="actionsalva_stato">
+   <property name="icon">
+    <iconset resource="risorse.qrc">
+     <normaloff>:/risorse/save.png</normaloff>:/risorse/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>salva stato</string>
+   </property>
+  </action>
+  <action name="actionadd">
+   <property name="icon">
+    <iconset resource="risorse.qrc">
+     <normaloff>:/risorse/add.png</normaloff>:/risorse/add.png</iconset>
+   </property>
+   <property name="text">
+    <string>add</string>
+   </property>
+  </action>
+  <action name="actionremove">
+   <property name="icon">
+    <iconset resource="risorse.qrc">
+     <normaloff>:/risorse/remove.png</normaloff>:/risorse/remove.png</iconset>
+   </property>
+   <property name="text">
+    <string>remove</string>
+   </property>
+  </action>
+  <action name="actionedit">
+   <property name="icon">
+    <iconset resource="risorse.qrc">
+     <normaloff>:/risorse/edit.png</normaloff>:/risorse/edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>edit</string>
+   </property>
+  </action>
+  <action name="actionlook">
+   <property name="icon">
+    <iconset resource="risorse.qrc">
+     <normaloff>:/risorse/search.png</normaloff>:/risorse/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>look</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="risorse.qrc"/>
+ </resources>
+ <connections/>
+</ui>

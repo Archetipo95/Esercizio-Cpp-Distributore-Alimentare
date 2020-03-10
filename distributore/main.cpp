@@ -1,5 +1,9 @@
 #include <saveLoad.cpp>
 
+#include "mainwindow.h"
+
+#include <QApplication>
+
 void clear() {
 #if defined _WIN32
     system("cls");
@@ -128,9 +132,15 @@ void rimuoviArticolo(dList<Articolo>& catalogo, dList<Distributore>& distributor
 
 
 
-int main(){
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 
-    dList<Distributore> distributore;
+
+    /* dList<Distributore> distributore;
     dList<Articolo> catalogo;
 
     //riempi catalogo da file Load
@@ -203,7 +213,8 @@ int main(){
     } while (scelta);
 
 
-    saveDistributori(distributore);
+    saveDistributori(distributore);*/
+
 }
 
 
